@@ -1,7 +1,7 @@
 class CreateProjects < ActiveRecord::Migration[7.0]
   def change
     create_table :projects do |t|
-      t.string :external_id
+      t.integer :external_id
       t.string :name
       t.integer :comment_count
       t.string :color

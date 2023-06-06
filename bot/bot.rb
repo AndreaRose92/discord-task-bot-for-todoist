@@ -13,4 +13,27 @@ bot.command :projects do |event|
   event.respond project_names
 end
 
+bot.command :new_project do |event|
+  message = event.message.content.delete_prefix "!new_project "
+  project = JSON.parse(
+    RestClient.post(
+      "#{$internal_url}/projects", {
+        name: message,
+      }
+    )
+  )
+  if project
+    event.respond "On the board!"
+  else
+    event.respond "Something went wrong"
+  end
+end
+
+bot.command :delete_project do |event|
+  message = event.message.content.delete_prefix "!delete_project "
+  RestClient.delete(
+    "#{$internal_url}/projects/#{message}"
+  )
+end
+
 bot.run

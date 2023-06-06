@@ -8,8 +8,31 @@ class ApplicationController < ActionController::API
   end
 
   def get_request(endpoint, id = nil)
-    JSON.parse RestClient.get api(endpoint, id), {
-                     "Authorization": "Bearer #{$todoist_token}",
-                   }
+    JSON.parse(
+      RestClient.get(
+        api(endpoint, id), {
+          "Authorization": "Bearer #{$todoist_token}",
+        }
+      )
+    )
+  end
+
+  def post_request(endpoint, object)
+    JSON.parse(
+      RestClient.post(
+        api(endpoint), object.to_json, {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer #{$todoist_token}",
+        },
+      )
+    )
+  end
+
+  def delete_request(endpoint, id)
+    RestClient.delete(
+      api(endpoint, id), {
+        "Authorization": "Bearer #{$todoist_token}",
+      }
+    )
   end
 end

@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   def index
-    # p $todoist_token
     projects = get_request("projects")
     projects.each do |project|
       Project.find_or_create_by(name: project["name"]) do |new_project|
@@ -15,6 +14,18 @@ class ProjectsController < ApplicationController
     target_index = projects.index { |project| project["name"].include? params[:id] }
     # project = get_request("projects", projects[target_index]["id"])
     render json: projects[target_index]
+  end
+
+  def create
+    project = post_request("projects", params)
+    Project.create(parse_todoist_response(project))
+    render json: project
+  end
+
+  def destroy
+    project = Project.where("name LIKE ?", "%#{params[:id]}%").first
+    project.destroy
+    delete_request("projects", project.external_id)
   end
 
   private
