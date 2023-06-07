@@ -2,5 +2,6 @@ Rails.application.routes.draw do
   resources :tasks
   resources :projects
 
-  get "/tasks/:project_name", to: "tasks#project_tasks"
+  get "/tasks/project/:project_name", to: "tasks#project_tasks"
+  post "/tasks/:id/close", to: "tasks#close"
 end

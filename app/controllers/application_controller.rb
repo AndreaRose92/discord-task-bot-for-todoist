@@ -35,4 +35,17 @@ class ApplicationController < ActionController::API
       }
     )
   end
+
+  def reassign_priority(int)
+    case int
+    when 1
+      return 4
+    when 2
+      return 3
+    when 3
+      return 2
+    when 4
+      return 1
+    end
+  end
 end

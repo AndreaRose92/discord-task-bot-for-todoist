@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_06_06_184522) do
   create_table "projects", force: :cascade do |t|
-    t.string "external_id"
+    t.integer "external_id"
     t.string "name"
     t.integer "comment_count"
     t.string "color"
